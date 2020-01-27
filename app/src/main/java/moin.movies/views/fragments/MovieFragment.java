@@ -103,11 +103,11 @@ public class MovieFragment extends Fragment implements Movie.View {
     @Override
     public void onFailed(String message) {
         if (getActivity() != null) {
-            Snack.Error(getActivity(), message);
+            Snack.onError(getActivity(), message);
         }
     }
 
-    public void updateUi(boolean isLoading) {
+    private void updateUi(boolean isLoading) {
         pg_movie.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         sv_movie.setVisibility(isLoading ? View.GONE : View.VISIBLE);
     }

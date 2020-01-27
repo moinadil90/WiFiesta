@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -49,7 +50,6 @@ import moin.movies.views.adapters.SuggestionsAdapter;
 import moin.movies.views.fragments.MovieFragment;
 import moin.movies.views.fragments.MovieListFragment;
 import moin.movies.views.utils.AnimationsHelper;
-import moin.movies.views.utils.GlideApp;
 import moin.movies.views.utils.TapTargetViewHelper;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     public void setCollapseInfo(String title, Uri imageUrl) {
-        GlideApp.with(this)
+        Glide.with(this)
                 .load(imageUrl)
                 .centerCrop()
                 .listener(new RequestListener<Drawable>() {

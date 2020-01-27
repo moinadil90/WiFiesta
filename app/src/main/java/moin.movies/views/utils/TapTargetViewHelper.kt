@@ -1,43 +1,33 @@
-package moin.movies.views.utils;
+package moin.movies.views.utils
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import android.util.DisplayMetrics;
-import androidx.appcompat.widget.Toolbar;
+import android.app.Activity
+import android.content.Context
+import android.graphics.Rect
+import android.util.DisplayMetrics
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
+import moin.movies.R
 
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import moin.movies.R;
-
-public class TapTargetViewHelper {
-
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    private Activity activity;
-    private Context context;
-
-    public TapTargetViewHelper(Activity activity) {
-        this.activity = activity;
-        this.context = activity.getBaseContext();
-        ButterKnife.bind(this, activity);
-    }
-
-    public void showTutorial() {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int screenWidth = displaymetrics.widthPixels;
-        int screenHeight = displaymetrics.heightPixels;
-        final Drawable movie = ContextCompat.getDrawable(context, R.drawable.ic_view_list);
-        final Rect movieTarget = new Rect(0, 0,
-                (movie != null ? movie.getIntrinsicWidth() : 0 ) * 2,
-                (movie != null ? movie.getIntrinsicHeight() : 0) * 2);
-        movieTarget.offset(screenWidth / 2, screenHeight / 2);
-        new TapTargetSequence(activity)
+class TapTargetViewHelper(private val activity: Activity) {
+    @JvmField
+    @BindView(R.id.toolbar)
+    var toolbar: Toolbar? = null
+    private val context: Context
+    fun showTutorial() {
+        val displaymetrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(displaymetrics)
+        val screenWidth = displaymetrics.widthPixels
+        val screenHeight = displaymetrics.heightPixels
+        val movie = ContextCompat.getDrawable(context, R.drawable.ic_view_list)
+        val movieTarget = Rect(0, 0,
+                (movie?.intrinsicWidth ?: 0) * 2,
+                (movie?.intrinsicHeight ?: 0) * 2)
+        movieTarget.offset(screenWidth / 2, screenHeight / 2)
+        TapTargetSequence(activity)
                 .continueOnCancel(true)
                 .targets(
                         TapTarget.forToolbarMenuItem(toolbar, R.id.action_search,
@@ -64,6 +54,11 @@ public class TapTargetViewHelper {
                                 .icon(movie)
                                 .cancelable(true)
                                 .tintTarget(true)
-                ).start();
+                ).start()
+    }
+
+    init {
+        context = activity.baseContext
+        ButterKnife.bind(this, activity)
     }
 }

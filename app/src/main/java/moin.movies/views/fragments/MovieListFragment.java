@@ -135,7 +135,7 @@ public class MovieListFragment extends Fragment implements MovieList.View, OnLoa
     @Override
     public void onSuccess() {
         if (getActivity() != null) {
-            Snack.Success(getActivity());
+            Snack.onSuccess(getActivity());
         }
     }
 
@@ -143,7 +143,7 @@ public class MovieListFragment extends Fragment implements MovieList.View, OnLoa
     public void onFailed(String message) {
         updateUi(false);
         if (getActivity() != null) {
-            Snack.Error(getActivity(), message);
+            Snack.onError(getActivity(), message);
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -25,7 +26,6 @@ import butterknife.ButterKnife;
 import moin.movies.R;
 import moin.movies.models.MovieListModel;
 import moin.movies.tasks.OnLoadMoreListener;
-import moin.movies.views.utils.GlideApp;
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -79,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final MovieListModel.Movie movie = movieList.get(position);
             final View movieItem = holder.itemView;
             final MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
-            GlideApp.with(movieItem.getContext())
+            Glide.with(movieItem.getContext())
                     .load(movie.getPoster())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
