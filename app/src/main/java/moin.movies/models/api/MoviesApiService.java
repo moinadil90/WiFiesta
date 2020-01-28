@@ -15,9 +15,9 @@ public interface MoviesApiService {
             "Content-Type: application/json;charset=utf-8",
             "Accept: application/json"
     })
-    @GET(Constants.BASE_URL)
+    @GET(value = "http://www.omdbapi.com/")
     Observable<MovieListModel> getMovieList(@QueryMap HashMap<String, String> params);
 
-    @GET(Constants.BASE_URL)
+    @GET(value = "http://www.omdbapi.com/")
     Observable<MovieModel> getMovie(@QueryMap HashMap<String, String> params);
 }

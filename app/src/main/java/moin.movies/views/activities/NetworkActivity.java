@@ -50,7 +50,7 @@ public class NetworkActivity extends AppCompatActivity implements NetworkChangeR
     }
 
     @Override
-    public void OnNetworkChanged(int status) {
+    public void onNetworkChanged(int status) {
         hasNetwork = status != 0;
     }
 }

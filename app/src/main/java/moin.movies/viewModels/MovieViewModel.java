@@ -1,8 +1,10 @@
 package moin.movies.viewModels;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,7 +22,6 @@ public class MovieViewModel implements Movie.Presenter {
 
     private Movie.View view;
     private HashMap<String, String> params;
-    private MoviesApiService moviesApiService;
     private static final String TAG = "MovieViewModel";
 
     public MovieViewModel(Movie.View view) {
@@ -30,9 +31,10 @@ public class MovieViewModel implements Movie.Presenter {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        moviesApiService = retrofit.create(MoviesApiService.class);
+        MoviesApiService moviesApiService = retrofit.create(MoviesApiService.class);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getMovie(String imdbID) {
         initParams(imdbID);
@@ -40,7 +42,7 @@ public class MovieViewModel implements Movie.Presenter {
     }
 
     private Observable<MovieModel> getObservable() {
-        return NetworkClient.getRetrofit().create(MoviesApiService.class)
+        return Objects.requireNonNull(NetworkClient.getRetrofit()).create(MoviesApiService.class)
                 .getMovie(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -51,11 +53,10 @@ public class MovieViewModel implements Movie.Presenter {
 
             @Override
             public void onNext(@io.reactivex.annotations.NonNull MovieModel response) {
-                final MovieModel movie = response;
-                if (movie != null) {
-                    view.showMovie(movie);
+                if (response != null) {
+                    view.showMovie(response);
                 } else {
-                    view.onFailed(response.toString());
+                    view.onFailed(String.valueOf(response));
                 }
             }
 

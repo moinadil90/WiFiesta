@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Noon Academy</string>
+    <string name="app_name">WiFiesta</string>
     <string name="movie_list_empty">Movie list empty.\nDo a new Search.</string>
     <string name="searchbar_hint">Search…</string>
     <string name="action_search">Search</string>

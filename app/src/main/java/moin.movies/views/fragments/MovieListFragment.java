@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,12 +116,12 @@ public class MovieListFragment extends Fragment implements MovieList.View, OnLoa
         final LayoutAnimationController controller =
                 AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom);
         rv_movies.setLayoutAnimation(controller);
-        rv_movies.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(rv_movies.getAdapter()).notifyDataSetChanged();
         rv_movies.scheduleLayoutAnimation();
     }
 
     private void clearMovieList() {
-        rv_movies.getLayoutManager().scrollToPosition(0);
+        Objects.requireNonNull(rv_movies.getLayoutManager()).scrollToPosition(0);
         int size = movieList.size();
         movieList.clear();
         adapter.notifyItemRangeRemoved(0, size);
@@ -148,7 +151,7 @@ public class MovieListFragment extends Fragment implements MovieList.View, OnLoa
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         try {
             callback = (MovieListCallback) context;

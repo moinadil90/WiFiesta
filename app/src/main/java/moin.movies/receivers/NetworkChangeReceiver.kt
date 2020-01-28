@@ -7,7 +7,7 @@ import moin.movies.views.utils.NetworkUtil.getConnectivityStatus
 
 class NetworkChangeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        networkChange!!.OnNetworkChanged(getConnectivityStatus(context))
+        networkChange!!.onNetworkChanged(getConnectivityStatus(context))
     }
 
     fun setNetworkChange(networkChange: NetworkChange?) {
@@ -15,7 +15,7 @@ class NetworkChangeReceiver : BroadcastReceiver() {
     }
 
     interface NetworkChange {
-        fun OnNetworkChanged(status: Int)
+        fun onNetworkChanged(status: Int)
     }
 
     companion object {

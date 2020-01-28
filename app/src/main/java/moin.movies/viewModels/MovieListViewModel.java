@@ -1,9 +1,11 @@
 package moin.movies.viewModels;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieListViewModel implements MovieList.MovieInterface {
 
     private MovieList.View view;
-    private MoviesApiService moviesApiService;
     private int page = 1;
     private int numPages = 2;
     private String query = "";
@@ -39,9 +40,10 @@ public class MovieListViewModel implements MovieList.MovieInterface {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        moviesApiService = retrofit.create(MoviesApiService.class);
+        MoviesApiService moviesApiService = retrofit.create(MoviesApiService.class);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getMoviesList(String title) {
         initPagination(title);
@@ -50,7 +52,7 @@ public class MovieListViewModel implements MovieList.MovieInterface {
     }
 
     private Observable<MovieListModel> getObservable() {
-        return NetworkClient.getRetrofit().create(MoviesApiService.class)
+        return Objects.requireNonNull(NetworkClient.getRetrofit()).create(MoviesApiService.class)
                 .getMovieList(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

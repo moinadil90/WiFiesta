@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
-    public void OnNetworkChanged(int status) {
+    public void onNetworkChanged(int status) {
         if (getSupportFragmentManager().findFragmentByTag(Constants.MOVIE_LIST_FRAGMENT) == null
                 && getSupportFragmentManager().findFragmentByTag(Constants.MOVIE_FRAGMENT) == null
                 && status == Constants.NETWORK_CONNECTED) {
